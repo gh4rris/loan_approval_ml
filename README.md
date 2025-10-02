@@ -1,1 +1,1 @@
-# loan_approval_ml
+# Loan Approval Classifier

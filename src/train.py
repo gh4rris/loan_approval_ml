@@ -37,6 +37,7 @@ def train_model(df: pd.DataFrame):
                ("scaler", StandardScaler()),
                ("classifier", LogisticRegression(max_iter=500))]
     )
+    mlflow.set_experiment("Loan Approval")
 
     with mlflow.start_run():
         pipeline.fit(X_train, y_train)
@@ -53,11 +54,15 @@ def train_model(df: pd.DataFrame):
         mlflow.log_metric("precision", precision)
         mlflow.log_metric("recall", recall)
         mlflow.log_metric("f1", f1)
+        mlflow.set_tag("Training Info", "Logistic regression for predicting loan approval")
 
-        # input_example = X_test.iloc[:5].copy()
-        # for col in input_example.select_dtypes(include="int").columns:
-        #     input_example[col] = input_example[col].astype("float64")
-        mlflow.sklearn.log_model(sk_model=pipeline, name="loan_approval_model", input_example=X_test.iloc[:5])
+        signature = mlflow.models.infer_signature(X_train, pipeline.predict(X_train))
+        mlflow.sklearn.log_model(
+            sk_model=pipeline,
+            name="loan_approval_model",
+            signature=signature,
+            input_example=X_train,
+            registered_model_name="logreg_loan_approval")
 
         print(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
 

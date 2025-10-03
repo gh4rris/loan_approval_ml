@@ -1,4 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from src.predict import load_model, predict
 import uvicorn
@@ -18,13 +21,15 @@ class LoanApplication(BaseModel):
     credit_score: float
     previous_loan_defaults_on_file: str
 
-app = FastAPI(title="Loan Approval Prediction API")
+app = FastAPI(title="Loan Approval Prediction App")
+app.mount("/static", StaticFiles(directory="api/static"), name="static")
+templates = Jinja2Templates(directory="api/templates")
 
-@app.get("/")
-def root():
-    return {"message": "Loan Approval Prediction API is running!"}
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
-@app.post("/predict")
+@app.post("/predict", response_class=JSONResponse)
 def get_prediction(application: LoanApplication):
     input_data = application.model_dump()
     model = load_model()

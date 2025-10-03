@@ -7,8 +7,92 @@
     <link rel="stylesheet" href="static/css/styles.css" />
   </head>
   <body>
-    <h1>Loan Approval Predictor</h1>
-    <p>Are you eligable for a loan?</p>
+    <div id="main-box">
+      <h1>Loan Approval Predictor</h1>
+      <p>Are you eligable for a loan?</p>
+      <form action="" id="loan-form">
+        <label for="age">Age:</label>
+        <input type="number" name="person_age" id="age" min="0" required />
+        <label for="gender">Gender:</label>
+        <select name="person_gender" id="gender" required>
+          <option>Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <label for="education">Education:</label>
+        <select name="person_education" id="education" required>
+          <option>Select</option>
+          <option value="High School">High School</option>
+          <option value="Associate">Associate</option>
+          <option value="Bachelor">Bachelor</option>
+          <option value="Master">Master</option>
+          <option value="Doctorate">Doctorate</option>
+        </select>
+        <label for="income">Income (annual):</label>
+        <input
+          type="number"
+          name="person_income"
+          id="income"
+          min="0"
+          required
+        />
+        <label for="employment_exp">Employment experience (years):</label>
+        <input
+          type="number"
+          name="person_emp_exp"
+          id="employment_exp"
+          min="0"
+          required
+        />
+        <label for="home_ownership">Home ownership:</label>
+        <select name="person_home_ownership" id="home_ownership" required>
+          <option>Select</option>
+          <option value="RENT">Rent</option>
+          <option value="MORTGAGE">Mortgage</option>
+          <option value="OWN">Own</option>
+          <option value="OTHER">Other</option>
+        </select>
+        <label for="amount">Loan amount:</label>
+        <input type="number" name="loan_amount" id="amount" min="0" required />
+        <label for="intent">Intent for loan:</label>
+        <select name="loan_intent" id="intent" required>
+          <option>Select</option>
+          <option value="PERSONAL">Personal</option>
+          <option value="EDUCATION">Education</option>
+          <option value="Medical">Medical</option>
+          <option value="Venture">Venture</option>
+          <option value="HOMEIMPROVEMENT">Home improvement</option>
+          <option value="DEBTCONSOLIDATION">Debt consolidation</option>
+        </select>
+        <label for="interest_rate">Interest Rate:</label>
+        <input
+          type="number"
+          name="loan_int_rate"
+          id="interest_rate"
+          min="0"
+          step="0.01"
+          required
+        />
+        <label for="loan_percentage">Loan as percentage of Income:</label>
+        <input
+          type="number"
+          name="loan_percent_income"
+          id="loan_percentage"
+          min="0"
+          step="0.01"
+          disabled
+          required
+        />
+        <label for="credit_history">Length of credit history (years):</label>
+        <input
+          type="number"
+          name="cb_person_cred_hist_length"
+          id="credit_history"
+          min="0"
+          required
+        />
+      </form>
+    </div>
     <script type="module" src="static/js/app.js"></script>
   </body>
 </html>

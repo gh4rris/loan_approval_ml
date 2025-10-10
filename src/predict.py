@@ -1,9 +1,13 @@
 import pandas as pd
 import mlflow
 import json
+from src.config import REGISTERED_MODEL
 
 def load_model():
-    return mlflow.sklearn.load_model(f"models:/logreg_loan_approval/latest")
+    try:
+        return mlflow.sklearn.load_model(f"models:/{REGISTERED_MODEL}/latest")
+    except Exception:
+        return None
 
 def predict(model, input_data: dict):
     X = pd.DataFrame([input_data])

@@ -1,7 +1,7 @@
 import pandas as pd
 import mlflow
 import mlflow.sklearn
-from config import DATA_PATH, SEED
+from src.config import DATA_PATH, SEED, REGISTERED_MODEL
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
@@ -62,9 +62,10 @@ def train_model(df: pd.DataFrame):
             name="loan_approval_model",
             signature=signature,
             input_example=X_train,
-            registered_model_name="logreg_loan_approval")
+            registered_model_name=REGISTERED_MODEL)
 
-        print(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
+    print(f"{REGISTERED_MODEL} successfully trained ad registered")
+    print(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
 
 if __name__ == "__main__":
     df = load_data(DATA_PATH)

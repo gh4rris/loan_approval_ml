@@ -22,9 +22,9 @@ def build_processor(df: pd.DataFrame):
     )
 
 def train_model(df: pd.DataFrame):
-    numerical_features = df.select_dtypes(exclude="object").columns
-    for col in numerical_features:
-        df[col] = df[col].astype("float64")
+    # numerical_features = df.select_dtypes(exclude="object").columns
+    # for col in numerical_features:
+    #     df[col] = df[col].astype("float64")
 
     X = df.drop(columns="loan_status")
     y = df["loan_status"]
@@ -56,15 +56,13 @@ def train_model(df: pd.DataFrame):
         mlflow.log_metric("f1", f1)
         mlflow.set_tag("Training Info", "Logistic regression for predicting loan approval")
 
-        signature = mlflow.models.infer_signature(X_train, pipeline.predict(X_train))
         mlflow.sklearn.log_model(
             sk_model=pipeline,
             name="loan_approval_model",
-            signature=signature,
             input_example=X_train,
             registered_model_name=REGISTERED_MODEL)
 
-    print(f"{REGISTERED_MODEL} successfully trained ad registered")
+    print(f"{REGISTERED_MODEL} successfully trained and registered")
     print(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
 
 if __name__ == "__main__":

@@ -4,13 +4,20 @@ main();
 
 function main() {
   const form = document.getElementById("loan-form");
+  const popupBtn = document.getElementById("popup-btn");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    console.log(JSON.stringify(data));
     const prediction = await predict(data);
-    console.log(prediction);
+    displayResults(prediction);
+  });
+  popupBtn.addEventListener("click", () => {
+    const loanForm = document.getElementById("loan-form");
+    const popupBox = document.getElementById("popup");
+    loanForm.style.pointerEvents = "all";
+    loanForm.style.opacity = 1;
+    popupBox.style.display = "none";
   });
 }
 
@@ -30,4 +37,14 @@ async function predict(data) {
   } catch (error) {
     console.error(error);
   }
+}
+
+function displayResults(prediction) {
+  const loanForm = document.getElementById("loan-form");
+  const popupBox = document.getElementById("popup");
+  popupBox.children[0].firstElementChild.innerText = ` ${prediction.loan_status}`;
+  popupBox.children[1].firstElementChild.innerText = ` ${prediction.probability}`;
+  loanForm.style.pointerEvents = "none";
+  loanForm.style.opacity = 0.6;
+  popupBox.style.display = "block";
 }

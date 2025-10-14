@@ -1,3 +1,7 @@
+* {
+  margin: 0;
+}
+
 body {
   background-color: aquamarine;
 }
@@ -11,4 +15,16 @@ body {
 #loan-form {
   display: flex;
   flex-direction: column;
+}
+
+#popup {
+  background-color: wheat;
+  position: fixed;
+  width: 18rem;
+  height: 9rem;
+  top: 25%;
+  border-radius: 6px;
+  box-shadow: 4px -5px 10px -3px rgba(0, 0, 0, 0.75);
+  display: none;
+  z-index: 1;
 }

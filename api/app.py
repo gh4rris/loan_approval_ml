@@ -47,4 +47,4 @@ def get_prediction(application: LoanApplication):
     
 
 if __name__ == "__main__":
-    uvicorn.run("api.app:app", reload=True)
+    uvicorn.run("api.app:app", host="0.0.0.0", reload=True)

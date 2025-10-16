@@ -3,12 +3,15 @@ import { API_BASE_URL } from "./config.js";
 main();
 
 function main() {
+  console.log(`Base URL: ${API_BASE_URL}`);
   const form = document.getElementById("loan-form");
   const popupBtn = document.getElementById("popup-btn");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
+    data.loan_percent_income =
+      Math.round((data.loan_amnt / data.person_income) * 100) / 100;
     const prediction = await predict(data);
     displayResults(prediction);
   });

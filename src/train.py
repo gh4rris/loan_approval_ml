@@ -10,7 +10,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import precision_score, recall_score, f1_score
 from xgboost import XGBClassifier
-import os
 
 def load_data(path: str):
     return pd.read_csv(path)

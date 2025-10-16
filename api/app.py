@@ -7,6 +7,9 @@ from src.predict import load_model, predict
 from src.train import load_data, train_model
 from src.config import DATA_PATH, REGISTERED_MODEL
 import uvicorn
+import mlflow
+from dotenv import load_dotenv
+import os
 
 class LoanApplication(BaseModel):
     person_age: float
@@ -23,10 +26,15 @@ class LoanApplication(BaseModel):
     credit_score: float
     previous_loan_defaults_on_file: str
 
-
+load_dotenv()
 app = FastAPI(title="Loan Approval Prediction App")
 app.mount("/static", StaticFiles(directory="api/static"), name="static")
 templates = Jinja2Templates(directory="api/templates")
+
+tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+if tracking_uri:
+    mlflow.set_tracking_uri(tracking_uri)
+    
 model = load_model()
 if model:
     print(f"{REGISTERED_MODEL} loaded successfully")

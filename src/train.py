@@ -2,7 +2,7 @@ import pandas as pd
 import mlflow
 import mlflow.sklearn
 from mlflow.models.signature import infer_signature
-from src.config import DATA_PATH, SEED, REGISTERED_MODEL
+from src.config import DATA_PATH, SEED, LATEST_RUN_PATH
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
@@ -40,7 +40,7 @@ def train_model(df: pd.DataFrame):
     )
 
     mlflow.set_experiment("Loan Approval")
-    with mlflow.start_run():
+    with mlflow.start_run() as run:
         pipeline.fit(X_train, y_train)
 
         y_pred = pipeline.predict(X_test)
@@ -49,20 +49,23 @@ def train_model(df: pd.DataFrame):
         precision = round(precision_score(y_test, y_pred), 2)
         recall = round(recall_score(y_test, y_pred), 2)
         f1 = round(f1_score(y_test, y_pred), 2)
-
+    
         mlflow.log_param("model_type", "XGBoostClassifier")
         mlflow.log_metric("accuracy", accuracy)
         mlflow.log_metric("precision", precision)
         mlflow.log_metric("recall", recall)
         mlflow.log_metric("f1", f1)
         mlflow.set_tag("Training Info", "XGBoost for predicting loan approval")
-
+        
         mlflow.sklearn.log_model(
             sk_model=pipeline,
-            name="loan_approval_model",
+            name="model",
             input_example=X_train,
-            signature=infer_signature(X_train.head(), pipeline.predict(X_train.head())),
-            registered_model_name=REGISTERED_MODEL)
+            signature=infer_signature(X_train.head(), pipeline.predict(X_train.head()))
+        )
+        run_id = run.info.run_id
+    with open(LATEST_RUN_PATH, "w") as f:
+        f.write(run_id)
 
     print(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
 

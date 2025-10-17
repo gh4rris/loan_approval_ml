@@ -3,7 +3,6 @@ import { API_BASE_URL } from "./config.js";
 main();
 
 function main() {
-  console.log(`Base URL: ${API_BASE_URL}`);
   const form = document.getElementById("loan-form");
   const popupBtn = document.getElementById("popup-btn");
   form.addEventListener("submit", async (e) => {

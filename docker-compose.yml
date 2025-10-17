@@ -19,8 +19,6 @@ services:
       dockerfile: Dockerfile.mlflow
     image: mlflow-server:latest
     container_name: mlflow-server
-    volumes:
-      - ./mlruns:/mlflow/mlruns
     ports:
       - "5000:5000"
     restart: unless-stopped

@@ -1,5 +1,5 @@
 import os
-ROOT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ROOT_PATH = os.path.dirname(os.path.dirname(__file__))
 DATA_PATH = f"{ROOT_PATH}/data/loan_data.csv"
-REGISTERED_MODEL="xgb_loan_approval"
+LATEST_RUN_PATH = f"{ROOT_PATH}/latest_run.txt"
 SEED = 666

@@ -2,8 +2,8 @@ FROM python:3.12.3-slim
 
 WORKDIR /mlflow
 
-RUN pip install mlflow sqlalchemy
+RUN pip install mlflow==3.4.0 sqlalchemy
 
 EXPOSE 5000
 
-CMD ["mlflow", "ui", "--host", "0.0.0.0", "--port", "5000"]
+CMD ["mlflow", "ui", "--host", "0.0.0.0", "--port", "5000", "--backend-store-uri", "./mlruns", "--default-artifact-root", "./mlruns"]

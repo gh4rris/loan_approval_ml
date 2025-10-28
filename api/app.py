@@ -26,25 +26,27 @@ class LoanApplication(BaseModel):
     credit_score: float
     previous_loan_defaults_on_file: str
 
-load_dotenv()
 app = FastAPI(title="Loan Approval Prediction App")
-app.mount("/static", StaticFiles(directory="api/static"), name="static")
-templates = Jinja2Templates(directory="api/templates")
 
-tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
-if tracking_uri:
-    mlflow.set_tracking_uri(tracking_uri)
+def main():
+    load_dotenv()
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
+    if tracking_uri:
+        mlflow.set_tracking_uri(tracking_uri)
+        
+    model = load_model()
+    if model:
+        print("Model loaded successfully")
+    else:
+        print("No existing model. Training new model:")
+        df = load_data(DATA_PATH)
+        train_model(df)
     
-model = load_model()
-if model:
-    print("Model loaded successfully")
-else:
-    print("No existing model. Training new model:")
-    df = load_data(DATA_PATH)
-    train_model(df)
 
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request):
+    app.mount("/static", StaticFiles(directory="api/static"), name="static")
+    templates = Jinja2Templates(directory="api/templates")
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/predict", response_class=JSONResponse)
@@ -55,4 +57,5 @@ def get_prediction(application: LoanApplication):
     
 
 if __name__ == "__main__":
-    uvicorn.run("api.app:app", host="0.0.0.0", port=8000)
+    main()
+    uvicorn.run("api.app:app", host="0.0.0.0", port=8000, reload=True)

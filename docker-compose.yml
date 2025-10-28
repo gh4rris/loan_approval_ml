@@ -3,12 +3,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: loan_approval:latest
-    container_name: loan_approval
+    image: gh4rris/loan_app
+    container_name: app
     depends_on:
       - mlflow
     environment:
-      MLFLOW_TRACKING_URI: "http://mlflow:5000"
+      MLFLOW_TRACKING_URI: "http://mlflow_server:5000"
     ports:
       - "8000:8000"
     restart: unless-stopped
@@ -17,8 +17,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.mlflow
-    image: mlflow-server:latest
-    container_name: mlflow-server
+    image: gh4rris/loan_mlflow
+    container_name: mlflow_server
     ports:
       - "5000:5000"
     restart: unless-stopped

@@ -2,7 +2,7 @@ import pandas as pd
 import mlflow
 import mlflow.sklearn
 from mlflow.models.signature import infer_signature
-from src.config import DATA_PATH, SEED, LATEST_RUN_PATH
+from src.config import DATA, SEED, LATEST_RUN
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
@@ -64,11 +64,11 @@ def train_model(df: pd.DataFrame):
             signature=infer_signature(X_train.head(), pipeline.predict(X_train.head()))
         )
         run_id = run.info.run_id
-    with open(LATEST_RUN_PATH, "w") as f:
+    with open(LATEST_RUN, "w") as f:
         f.write(run_id)
 
     print(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
 
 if __name__ == "__main__":
-    df = load_data(DATA_PATH)
+    df = load_data(DATA)
     train_model(df)

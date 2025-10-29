@@ -1,11 +1,11 @@
 import pandas as pd
 import mlflow
 import json
-from src.config import LATEST_RUN_PATH
+from src.config import LATEST_RUN
 
 def load_model():
     try:
-        with open(LATEST_RUN_PATH, "r") as f:
+        with open(LATEST_RUN, "r") as f:
             run_id = f.read()
         return mlflow.sklearn.load_model(f"runs:/{run_id}/model")
     except Exception:

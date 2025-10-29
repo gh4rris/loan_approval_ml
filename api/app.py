@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from src.predict import load_model, predict
 from src.train import load_data, train_model
-from src.config import DATA_PATH
+from src.config import DATA
 import uvicorn
 import mlflow
 from dotenv import load_dotenv
@@ -27,6 +27,7 @@ class LoanApplication(BaseModel):
     previous_loan_defaults_on_file: str
 
 app = FastAPI(title="Loan Approval Prediction App")
+mlflow_server = FastAPI(title="Mlflow server")
 
 def main():
     load_dotenv()
@@ -39,7 +40,7 @@ def main():
         print("Model loaded successfully")
     else:
         print("No existing model. Training new model:")
-        df = load_data(DATA_PATH)
+        df = load_data(DATA)
         train_model(df)
     
 
@@ -59,3 +60,4 @@ def get_prediction(application: LoanApplication):
 if __name__ == "__main__":
     main()
     uvicorn.run("api.app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api.app:mlflow_server", host="0.0.0.0", port=5000)

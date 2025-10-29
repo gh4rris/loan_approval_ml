@@ -27,7 +27,6 @@ class LoanApplication(BaseModel):
     previous_loan_defaults_on_file: str
 
 app = FastAPI(title="Loan Approval Prediction App")
-mlflow_server = FastAPI(title="Mlflow server")
 
 def main():
     load_dotenv()
@@ -60,4 +59,3 @@ def get_prediction(application: LoanApplication):
 if __name__ == "__main__":
     main()
     uvicorn.run("api.app:app", host="0.0.0.0", port=8000, reload=True)
-    uvicorn.run("api.app:mlflow_server", host="0.0.0.0", port=5000)

@@ -1,3 +1,5 @@
 __pycache__/
 mlruns/
+.vscode/
+node_modules/
 latest_run.txt

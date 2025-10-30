@@ -1,4 +1,4 @@
-name: ci
+name: CI - Loan Approval
 
 on:
   pull_request:

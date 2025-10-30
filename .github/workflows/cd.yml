@@ -1,0 +1,58 @@
+name: CD - Loan Approval
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy to ECS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Log into Docker Hub
+        run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Build app & mlflow images
+        run: |
+          docker build . -t "${{ secrets.DOCKER_USERNAME }}"/loan_app:latest
+          docker build . -f Dockerfile.mlflow -t "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:latest
+
+      - name: Push images
+        run: |
+          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_app:latest
+          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:latest
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Render app container update
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: loan-approval-task
+          container-name: app
+          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_app:latest"
+
+      - name: Render mlflow_server container update
+        id: task-def-mlflow
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          container-name: mlflow_server
+          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_mlflow:latest"
+
+      - name: Deploy new task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        with:
+          task-definition: ${{ steps.task-def-mlflow.outputs.task-definition }}
+          service: ${{ vars.ECS_SERVICE }}
+          cluster: loan-approval-predictor
+          force-new-deployment: true

@@ -34,7 +34,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Download current task definition
-        run: aws ecs describe-task-definition --task-definition loan-approval-task > task-def.json
+        run: aws ecs describe-task-definition --task-definition loan-approval-task --query taskDefinition > task-def.json
 
       - name: Render app container update
         id: task-def

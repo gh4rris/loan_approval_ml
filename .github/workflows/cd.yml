@@ -18,13 +18,13 @@ jobs:
 
       - name: Build app & mlflow images
         run: |
-          docker build . -t "${{ secrets.DOCKER_USERNAME }}"/loan_app:latest
-          docker build . -f Dockerfile.mlflow -t "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:latest
+          docker build . -t "${{ secrets.DOCKER_USERNAME }}"/loan_app:${{ github.sha }}
+          docker build . -f Dockerfile.mlflow -t "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:${{ github.sha }}
 
       - name: Push images
         run: |
-          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_app:latest
-          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:latest
+          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_app:${{ github.sha }}
+          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:${{ github.sha }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v5
@@ -42,7 +42,7 @@ jobs:
         with:
           task-definition: task-def.json
           container-name: app
-          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_app:latest"
+          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_app:${{ github.sha }}"
 
       - name: Render mlflow_server container update
         id: task-def-mlflow
@@ -50,7 +50,7 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           container-name: mlflow_server
-          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_mlflow:latest"
+          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_mlflow:${{ github.sha }}"
 
       - name: Deploy new task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2

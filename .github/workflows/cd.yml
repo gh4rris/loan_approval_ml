@@ -33,11 +33,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Download current task definition
+        run: aws ecs describe-task-definition --task-definition loan-approval-task > task-def.json
+
       - name: Render app container update
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ${{ vars.TASK_DEFINITION }}
+          task-definition: task-def.json
           container-name: app
           image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_app:latest"
 

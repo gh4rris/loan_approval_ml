@@ -37,7 +37,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: loan-approval-task
+          task-definition: ${{ vars.TASK_DEFINITION }}
           container-name: app
           image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_app:latest"
 
@@ -54,5 +54,5 @@ jobs:
         with:
           task-definition: ${{ steps.task-def-mlflow.outputs.task-definition }}
           service: ${{ vars.ECS_SERVICE }}
-          cluster: loan-approval-predictor
+          cluster: ${{ vars.CLUSTER }}
           force-new-deployment: true

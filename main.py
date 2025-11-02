@@ -12,6 +12,8 @@ def main():
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
     if tracking_uri:
         mlflow.set_tracking_uri(tracking_uri)
+    if not os.path.exists("run_ids"):
+        os.mkdir("run_ids")
         
     model = load_model()
     if model:

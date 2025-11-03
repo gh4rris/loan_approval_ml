@@ -7,7 +7,7 @@ def load_model():
     try:
         with open(LATEST_RUN, "r") as f:
             run_id = f.read()
-        return mlflow.sklearn.load_model(f"runs:/{run_id}/model")
+        return mlflow.sklearn.load_model(f"runs:/{run_id}/app_model")
     except Exception:
         return None
 

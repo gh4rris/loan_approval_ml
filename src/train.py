@@ -24,8 +24,7 @@ def build_processor(df: pd.DataFrame):
 
 def train_model(df: pd.DataFrame):
     numerical_features = df.select_dtypes(exclude="object").columns
-    for col in numerical_features:
-        df[col] = df[col].astype("float64")
+    df[numerical_features] = df[numerical_features].astype(float)
 
     X = df.drop(columns="loan_status")
     y = df["loan_status"]
@@ -59,7 +58,7 @@ def train_model(df: pd.DataFrame):
         
         mlflow.sklearn.log_model(
             sk_model=pipeline,
-            name="model",
+            name="app_model",
             input_example=X_train,
             signature=infer_signature(X_train.head(), pipeline.predict(X_train.head()))
         )

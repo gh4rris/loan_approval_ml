@@ -11,21 +11,28 @@
       <div id="popup">
         <p id="prediction">Your loan prediction is:<span></span></p>
         <p id="probability">Approval probability:<span></span></p>
-        <button id="popup-btn">Ok</button>
+        <button id="popup-btn" class="btn">Ok</button>
       </div>
       <h1>Loan Approval Predictor</h1>
       <p>Are you eligable for a loan?</p>
-      <form action="" id="loan-form">
+      <form id="loan-form">
         <label for="age">Age:</label>
-        <input type="number" name="person_age" id="age" min="0" required />
+        <input
+          type="number"
+          name="person_age"
+          id="age"
+          min="0"
+          class="input"
+          required
+        />
         <label for="gender">Gender:</label>
-        <select name="person_gender" id="gender" required>
+        <select name="person_gender" id="gender" class="input" required>
           <option>Select</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
         <label for="education">Education:</label>
-        <select name="person_education" id="education" required>
+        <select name="person_education" id="education" class="input" required>
           <option>Select</option>
           <option value="High School">High School</option>
           <option value="Associate">Associate</option>
@@ -39,6 +46,7 @@
           name="person_income"
           id="income"
           min="0"
+          class="input"
           required
         />
         <label for="employment_exp">Employment experience (years):</label>
@@ -47,10 +55,16 @@
           name="person_emp_exp"
           id="employment_exp"
           min="0"
+          class="input"
           required
         />
         <label for="home_ownership">Home ownership:</label>
-        <select name="person_home_ownership" id="home_ownership" required>
+        <select
+          name="person_home_ownership"
+          id="home_ownership"
+          class="input"
+          required
+        >
           <option>Select</option>
           <option value="RENT">Rent</option>
           <option value="MORTGAGE">Mortgage</option>
@@ -58,9 +72,16 @@
           <option value="OTHER">Other</option>
         </select>
         <label for="amount">Loan amount:</label>
-        <input type="number" name="loan_amnt" id="amount" min="0" required />
+        <input
+          type="number"
+          name="loan_amnt"
+          id="amount"
+          min="0"
+          class="input"
+          required
+        />
         <label for="intent">Intent for loan:</label>
-        <select name="loan_intent" id="intent" required>
+        <select name="loan_intent" id="intent" class="input" required>
           <option>Select</option>
           <option value="PERSONAL">Personal</option>
           <option value="EDUCATION">Education</option>
@@ -76,6 +97,7 @@
           id="interest_rate"
           min="0"
           step="0.01"
+          class="input"
           required
         />
         <label for="credit_history">Length of credit history (years):</label>
@@ -84,30 +106,45 @@
           name="cb_person_cred_hist_length"
           id="credit_history"
           min="0"
+          class="input"
           required
         />
         <label for="score">Credit Score:</label>
-        <input type="number" name="credit_score" id="score" min="0" required />
+        <input
+          type="number"
+          name="credit_score"
+          id="score"
+          min="0"
+          class="input"
+          required
+        />
         <p>Previously defaulted on a loan:</p>
-        <div>
-          <input
-            type="radio"
-            id="default-yes"
-            name="previous_loan_defaults_on_file"
-            value="Yes"
-          />
-          <label for="default-yes">Yes</label>
+        <div class="input">
+          <div>
+            <input
+              type="radio"
+              id="default-yes"
+              name="previous_loan_defaults_on_file"
+              value="Yes"
+            />
+            <label for="default-yes">Yes</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="default-no"
+              name="previous_loan_defaults_on_file"
+              value="No"
+            />
+            <label for="default-no">No</label>
+          </div>
         </div>
-        <div>
-          <input
-            type="radio"
-            id="default-no"
-            name="previous_loan_defaults_on_file"
-            value="No"
-          />
-          <label for="default-no">No</label>
-        </div>
-        <input type="submit" value="Predict Approval" />
+        <input
+          id="submit-btn"
+          class="btn"
+          type="submit"
+          value="Predict Approval"
+        />
       </form>
     </div>
     <script type="module" src="static/app.js"></script>

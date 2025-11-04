@@ -3,7 +3,9 @@
 }
 
 body {
-  background-color: aquamarine;
+  background: linear-gradient(to bottom right, white, rgb(150, 155, 184));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 #main-box {
@@ -13,18 +15,66 @@ body {
 }
 
 #loan-form {
+  margin-top: 0.7rem;
   display: flex;
   flex-direction: column;
 }
 
+.input {
+  margin-bottom: 0.3rem;
+}
+
+#submit-btn {
+  width: 150px;
+}
+
+#popup-btn {
+  margin-top: 10px;
+  width: 130px;
+}
+
+.btn {
+  border: 2px solid rgb(150, 155, 184);
+  border-radius: 8px;
+  background-color: white;
+  color: rgb(78, 81, 104);
+  font-size: 0.9rem;
+  height: 30px;
+  align-self: center;
+  transition:
+    background-color 0.3s ease-in-out,
+    border 3s ease-in-out,
+    transform 0.03s ease-in-out;
+}
+
+.btn:hover {
+  border: 2px solid rgb(78, 81, 104);
+  background-color: rgb(235, 235, 235);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
 #popup {
-  background-color: wheat;
+  border: 2px solid rgba(78, 81, 104, 0.521);
+  background: linear-gradient(to bottom right, rgb(144, 150, 185), white);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   position: fixed;
   width: 18rem;
   height: 9rem;
   top: 25%;
   border-radius: 6px;
-  box-shadow: 4px -5px 10px -3px rgba(0, 0, 0, 0.75);
+  box-shadow: 4px -5px 10px -4px rgba(0, 0, 0, 0.55);
   display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
   z-index: 1;
+}
+
+#popup span {
+  font-weight: bold;
 }

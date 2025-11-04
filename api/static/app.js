@@ -44,9 +44,16 @@ async function predict(data) {
 function displayResults(prediction) {
   const loanForm = document.getElementById("loan-form");
   const popupBox = document.getElementById("popup");
-  popupBox.children[0].firstElementChild.innerText = ` ${prediction.loan_status}`;
-  popupBox.children[1].firstElementChild.innerText = ` ${prediction.probability}`;
+  const status = popupBox.children[0].firstElementChild;
+  const proability = popupBox.children[1].firstElementChild;
+  status.innerText = ` ${prediction.loan_status}`;
+  proability.innerText = ` ${prediction.probability * 100}%`;
+  if (prediction.loan_status === "Approved") {
+    status.style.color = "forestgreen";
+  } else {
+    status.style.color = "firebrick";
+  }
   loanForm.style.pointerEvents = "none";
   loanForm.style.opacity = 0.6;
-  popupBox.style.display = "block";
+  popupBox.style.display = "flex";
 }

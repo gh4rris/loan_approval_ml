@@ -34,42 +34,42 @@ MLflow Server: [http://loan-approval-predictor-1233273102.eu-west-2.elb.amazonaw
 Local run can either be done with, or without containers
 
 - Clone the repo:
- 
- ```bash
- git clone https://github.com/gh4rris/loan_approval_ml.git
- cd loan_approval_ml
- ```
+
+```bash
+git clone https://github.com/gh4rris/loan_approval_ml.git
+cd loan_approval_ml
+```
 
 ### With containers (Recommended)
 
- - Build docker containers:
+- Build docker containers:
 
- ```bash
- docker compose up -d --build
- ```
+```bash
+docker compose up -d --build
+```
 
- ### Without containers
+### Without containers
 
- - Install dependencies and run python:
+- Install dependencies and run python:
 
- ```bash
- pip install -r requirements.txt
- python main.py
- ```
+```bash
+pip install -r requirements.txt
+python main.py
+```
 
- - Run mlflow in another terminal:
+- Run mlflow in another terminal:
 
- ```bash
- mlflow ui --port 5000
- ```
+```bash
+mlflow ui --port 5000
+```
 
- ### View App & MLflow Server
+### View App & MLflow Server
 
- App: http://localhost:8000<br>
- MLflow Server: http://localhost:5000
+App: http://localhost:8000<br>
+MLflow Server: http://localhost:5000
 
- ## Relationship between features and target [04_interpretability.ipynb](/notebooks/04_interpretability.ipynb)
+## Relationship between features and target [04_interpretability.ipynb](/notebooks/04_interpretability.ipynb)
 
- ![numerical](/images/pdp_numerical.png)
+![numerical](/images/pdp_numerical.png)
 
- ![categorical](/images/pdp_categorical.png)
+![categorical](/images/pdp_categorical.png)

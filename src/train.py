@@ -1,8 +1,9 @@
+from config import DATA, SEED, LATEST_RUN
+
 import pandas as pd
 import mlflow
 import mlflow.sklearn
 from mlflow.models.signature import infer_signature
-from src.config import DATA, SEED, LATEST_RUN
 from sklearn.model_selection import train_test_split
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder
@@ -37,7 +38,7 @@ def train_model(df: pd.DataFrame):
                ("scaler", StandardScaler()),
                ("classifier", XGBClassifier(colsample_bytree=0.5244063969, learning_rate=0.03997856839636343, max_depth=83, n_estimators=600))]
     )
-
+    
     mlflow.set_experiment("Loan Approval")
     with mlflow.start_run() as run:
         pipeline.fit(X_train, y_train)

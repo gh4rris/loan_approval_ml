@@ -20,6 +20,7 @@ class LoanApplication(BaseModel):
     credit_score: float
     previous_loan_defaults_on_file: str
 
+
 app = FastAPI(title="Loan Approval Prediction App")
 
 @app.get("/", response_class=HTMLResponse)

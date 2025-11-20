@@ -1,20 +1,18 @@
 from src.predict import load_model
 from src.train import load_data, train_model
-from src.config import DATA
+from config import DATA, HOST, APP_PORT, RELOAD, MLFLOW_TRACKING_URI
 
 import mlflow
 import uvicorn
 import os
-from dotenv import load_dotenv
+
 
 def main():
-    load_dotenv()
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI")
-    if tracking_uri:
-        mlflow.set_tracking_uri(tracking_uri)
+    if MLFLOW_TRACKING_URI:
+        mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
     if not os.path.exists("run_ids"):
         os.mkdir("run_ids")
-        
+    
     model = load_model()
     if model:
         print("Model loaded successfully")
@@ -23,6 +21,7 @@ def main():
         df = load_data(DATA)
         train_model(df)
 
+
 if __name__ == "__main__":
     main()
-    uvicorn.run("api.app:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("api.app:app", host=HOST, port=int(APP_PORT), reload=RELOAD)

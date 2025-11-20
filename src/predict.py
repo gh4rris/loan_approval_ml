@@ -1,7 +1,7 @@
 import pandas as pd
 import mlflow
 import json
-from src.config import LATEST_RUN
+from config import LATEST_RUN
 
 def load_model():
     try:

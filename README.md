@@ -4,8 +4,7 @@ A supervised machine learning application that predicts loan approval likelihood
 
 The notebooks include an exploratory data analysis of the training data: [01_eda.ipynb](/notebooks/01_eda.ipynb) & an interpretability analysis of the final XGBClassifier, using partial dependece plots to visualizehow features affect the target: [04_interpretability.ipynb](/notebooks/04_interpretability.ipynb)
 
-Live app: [http://loan-approval-predictor-1233273102.eu-west-2.elb.amazonaws.com/](http://loan-approval-predictor-1233273102.eu-west-2.elb.amazonaws.com/)<br>
-MLflow Server: [http://loan-approval-predictor-1233273102.eu-west-2.elb.amazonaws.com/mlflow/](http://loan-approval-predictor-1233273102.eu-west-2.elb.amazonaws.com/mlflow/)
+Live app: [http://ec2-35-179-103-165.eu-west-2.compute.amazonaws.com:8000](http://ec2-35-179-103-165.eu-west-2.compute.amazonaws.com:8000)
 
 ![loan-app](/images/loan-approval.jpg)
 

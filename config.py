@@ -13,6 +13,6 @@ PLATFORM = os.getenv("PLATFORM")
 ROOT_PATH = os.path.abspath(os.path.dirname(__file__))
 DATA = f"{ROOT_PATH}/data/loan_data.csv"
 LATEST_RUN = f"{ROOT_PATH}/run_ids/app_latest_run.txt"
-MLFLOW_TRACKING_URI = f"file://{ROOT_PATH}/mlruns" if PLATFORM == "dev" else MLFLOW_BASE_URI + MLFLOW_PORT
+MLFLOW_TRACKING_URI = MLFLOW_BASE_URI + MLFLOW_PORT if PLATFORM == "docker" else f"file://{ROOT_PATH}/mlruns"
 RELOAD = True if PLATFORM == "dev" else False
 SEED = 666

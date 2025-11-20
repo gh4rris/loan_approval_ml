@@ -12,7 +12,7 @@ services:
       MLFLOW_PORT: ${MLFLOW_PORT}
       MLFLOW_BASE_URI: ${MLFLOW_BASE_URI}
       HOST: ${HOST}
-      PLATFORM: prod
+      PLATFORM: docker
     ports:
       - 8000:${APP_PORT}
     restart: unless-stopped

@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to ECS
+    name: Deploy to EC2
     runs-on: ubuntu-latest
 
     steps:
@@ -26,6 +26,11 @@ jobs:
             cd ~/loan_approval_ml
             git fetch --all
             git reset --hard origin/main
+            touch .env
+            echo ${{ vars.APP_PORT }} >> .env
+            echo ${{ vars.MLFLOW_PORT }} >> .env
+            echo ${{ vars.MLFLOW_BASE_URI }} >> .env
+            echo ${{ vars.HOST }} >> .env
             docker compose -f docker-compose.prod.yml down
             docker compose -f docker-compose.prod.yml up -d --force-recreate
           EOF

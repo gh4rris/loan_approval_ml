@@ -27,10 +27,10 @@ jobs:
             git fetch --all
             git reset --hard origin/main
             touch .env
-            echo ${{ vars.APP_PORT }} >> .env
-            echo ${{ vars.MLFLOW_PORT }} >> .env
-            echo ${{ vars.MLFLOW_BASE_URI }} >> .env
-            echo ${{ vars.HOST }} >> .env
+            echo APP_PORT=${{ vars.APP_PORT }} >> .env
+            echo MLFLOW_PORT=${{ vars.MLFLOW_PORT }} >> .env
+            echo MLFLOWBASE_URI=${{ vars.MLFLOW_BASE_URI }} >> .env
+            echo HOST=${{ vars.HOST }} >> .env
             docker compose -f docker-compose.prod.yml down
             docker compose -f docker-compose.prod.yml up -d --force-recreate
           EOF

@@ -13,49 +13,19 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      - name: Log into Docker Hub
-        run: echo "${{ secrets.DOCKER_ACCESS_TOKEN }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      - name: Build app & mlflow images
+      - name: Setup SSH key
         run: |
-          docker build . -t "${{ secrets.DOCKER_USERNAME }}"/loan_app:${{ github.sha }}
-          docker build . -f Dockerfile.mlflow -t "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:${{ github.sha }}
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          ssh_keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Push images
+      - name: Deploy to EC2
         run: |
-          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_app:${{ github.sha }}
-          docker push "${{ secrets.DOCKER_USERNAME }}"/loan_mlflow:${{ github.sha }}
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v5
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Download current task definition
-        run: aws ecs describe-task-definition --task-definition loan-approval-task --query taskDefinition > task-def.json
-
-      - name: Render app container update
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: task-def.json
-          container-name: app
-          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_app:${{ github.sha }}"
-
-      - name: Render mlflow_server container update
-        id: task-def-mlflow
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          container-name: mlflow_server
-          image: "docker.io/${{ secrets.DOCKER_USERNAME }}/loan_mlflow:${{ github.sha }}"
-
-      - name: Deploy new task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
-        with:
-          task-definition: ${{ steps.task-def-mlflow.outputs.task-definition }}
-          service: ${{ vars.ECS_SERVICE }}
-          cluster: ${{ vars.CLUSTER }}
-          force-new-deployment: true
+          ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd ~/loan_approval_ml
+            git fetch --all
+            git reset --hard origin/main
+            docker compose -f docker-compose.prod.yml down
+            docker compose -f docker-compose.prod.yml up -d --force-recreate
+          EOF

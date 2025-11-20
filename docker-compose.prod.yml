@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: loan_app
+    container_name: app
+    environment:
+      APP_PORT: ${APP_PORT}
+      MLFLOW_PORT: ${MLFLOW_PORT}
+      MLFLOW_BASE_URI: ${MLFLOW_BASE_URI}
+      HOST: ${HOST}
+      PLATFORM: prod
+    ports:
+      - 8000:${APP_PORT}
+    restart: unless-stopped

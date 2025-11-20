@@ -6,6 +6,7 @@ COPY ./api ./api
 COPY ./data ./data
 COPY ./src ./src
 COPY main.py .
+COPY config.py .
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

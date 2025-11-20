@@ -3,3 +3,4 @@ mlruns/
 .vscode/
 node_modules/
 run_ids/
+.env

@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install OpenSSH Client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
       - name: Check out code
         uses: actions/checkout@v4
 

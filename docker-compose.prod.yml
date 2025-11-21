@@ -13,4 +13,3 @@ services:
       PLATFORM: prod
     ports:
       - 8000:${APP_PORT}
-    restart: unless-stopped

@@ -47,7 +47,7 @@ function displayResults(prediction) {
   const status = popupBox.children[0].firstElementChild;
   const proability = popupBox.children[1].firstElementChild;
   status.innerText = ` ${prediction.loan_status}`;
-  proability.innerText = ` ${prediction.probability * 100}%`;
+  proability.innerText = ` ${Math.round(prediction.probability * 100)}%`;
   if (prediction.loan_status === "Approved") {
     status.style.color = "forestgreen";
   } else {

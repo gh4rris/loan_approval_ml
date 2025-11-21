@@ -26,10 +26,12 @@ jobs:
             cd ~/loan_approval_ml
             git fetch --all
             git reset --hard origin/main
+            rm -r notebooks/ images/ .github/
+            rm README.md docker-compose.local.yml
             touch .env
-            echo APP_PORT=${{ vars.APP_PORT }} >> .env
+            echo APP_PORT=${{ vars.APP_PORT }} > .env
             echo MLFLOW_PORT=${{ vars.MLFLOW_PORT }} >> .env
-            echo MLFLOWBASE_URI=${{ vars.MLFLOW_BASE_URI }} >> .env
+            echo MLFLOW_BASE_URI=${{ vars.MLFLOW_BASE_URI }} >> .env
             echo HOST=${{ vars.HOST }} >> .env
             docker compose -f docker-compose.prod.yml down
             docker compose -f docker-compose.prod.yml up -d --force-recreate

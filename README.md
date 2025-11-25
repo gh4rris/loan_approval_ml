@@ -25,7 +25,7 @@ Live app: [http://ec2-35-179-103-165.eu-west-2.compute.amazonaws.com:8000](http:
 - **Backend:** Python, FastAPI
 - **ML:** scikit-learn, pandas, numpy, mlflow
 - **Frontend:** Javascript, HTML, CSS
-- **Deployment:** Docker, AWS ECS Fargate
+- **Deployment:** Docker, AWS EC2
 
 ## Run locally
 

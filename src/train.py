@@ -1,4 +1,4 @@
-from config import DATA, SEED, LATEST_RUN
+from config import SEED, LATEST_RUN
 
 import pandas as pd
 import mlflow
@@ -12,10 +12,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.metrics import precision_score, recall_score, f1_score
 from xgboost import XGBClassifier
 
-def load_data(path: str):
+
+def load_data(path: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
-def build_processor(df: pd.DataFrame):
+
+def build_processor(df: pd.DataFrame) -> ColumnTransformer:
     categorical_features = df.select_dtypes(include="object").columns
     
     return ColumnTransformer(
@@ -23,7 +25,8 @@ def build_processor(df: pd.DataFrame):
         remainder="passthrough"
     )
 
-def train_model(df: pd.DataFrame):
+
+def train_model(df: pd.DataFrame) -> None:
     numerical_features = df.select_dtypes(exclude="object").columns
     df[numerical_features] = df[numerical_features].astype(float)
 
@@ -68,7 +71,3 @@ def train_model(df: pd.DataFrame):
         f.write(run_id)
 
     print(f"Accuracy: {accuracy}, Precision: {precision}, Recall: {recall}, F1: {f1}")
-
-if __name__ == "__main__":
-    df = load_data(DATA)
-    train_model(df)

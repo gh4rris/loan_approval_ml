@@ -8,6 +8,13 @@ body {
   background-attachment: fixed;
 }
 
+#clear-random-box {
+  display: flex;
+  justify-content: space-around;
+  margin: 0.5rem 0;
+  width: 210px;
+}
+
 #main-box {
   display: flex;
   flex-direction: column;
@@ -15,7 +22,6 @@ body {
 }
 
 #loan-form {
-  margin-top: 0.7rem;
   display: flex;
   flex-direction: column;
 }

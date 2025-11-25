@@ -23,6 +23,9 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} <<-EOF
+            docker container stop $(docker ps -q)
+            docker container rm $(docker ps -aq)
+            docker image rm loan_app
             git clone https://github.com/gh4rris/loan_approval_ml.git
             cd loan_approval_ml/
             rm -r notebooks/ images/ .github/
@@ -32,7 +35,6 @@ jobs:
             echo MLFLOW_PORT=${{ vars.MLFLOW_PORT }} >> .env
             echo MLFLOW_BASE_URI=${{ vars.MLFLOW_BASE_URI }} >> .env
             echo HOST=${{ vars.HOST }} >> .env
-            docker compose -f docker-compose.prod.yml down
             docker compose -f docker-compose.prod.yml up -d --force-recreate
             cd ..
             rm -rf loan_approval_ml/

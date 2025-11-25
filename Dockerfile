@@ -2,7 +2,7 @@ FROM python:3.12.3-slim
 
 WORKDIR /app
 
-COPY ./api ./api
+COPY ./frontend ./frontend
 COPY ./data ./data
 COPY ./src ./src
 COPY main.py .

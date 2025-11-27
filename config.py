@@ -20,6 +20,11 @@ RUN_IDS = os.path.join(ROOT_PATH, "run_ids")
 LATEST_RUN = os.path.join(RUN_IDS, "app_latest_run.txt")
 MLFLOW_TRACKING_URI = MLFLOW_BASE_URI + MLFLOW_PORT if PLATFORM == "docker" else f"file://{ROOT_PATH}/mlruns"
 RELOAD = False if PLATFORM == "prod" else True
+
+COLSAMPLE_BYTREE = 0.5244063969
+LEARNING_RATE = 0.03997856839636343
+MAX_DEPTH = 83
+N_ESTIMATORS = 600
 SEED = 666
 
 class ApplicationValues(BaseModel):

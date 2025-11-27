@@ -1,4 +1,4 @@
-from config import SEED, LATEST_RUN
+from config import COLSAMPLE_BYTREE, LEARNING_RATE, MAX_DEPTH, N_ESTIMATORS, SEED, LATEST_RUN
 
 import pandas as pd
 import mlflow
@@ -39,7 +39,7 @@ def train_model(df: pd.DataFrame) -> None:
     pipeline = Pipeline(
         steps=[("preprocessor", processor),
                ("scaler", StandardScaler()),
-               ("classifier", XGBClassifier(colsample_bytree=0.5244063969, learning_rate=0.03997856839636343, max_depth=83, n_estimators=600))]
+               ("classifier", XGBClassifier(colsample_bytree=COLSAMPLE_BYTREE, learning_rate=LEARNING_RATE, max_depth=MAX_DEPTH, n_estimators=N_ESTIMATORS))]
     )
     
     mlflow.set_experiment("Loan Approval")

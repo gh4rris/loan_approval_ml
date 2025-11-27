@@ -3,15 +3,16 @@ from config import LATEST_RUN
 import pandas as pd
 import mlflow
 from typing import Any
+from sklearn.pipeline import Pipeline
 
 
-def load_model() -> Any | None:
+def load_model() -> Pipeline | None:
     with open(LATEST_RUN, "r") as f:
         run_id = f.read()
     return mlflow.sklearn.load_model(f"runs:/{run_id}/app_model")
 
 
-def predict(model: Any, input_data: dict[str, Any]) -> dict[str, Any]:
+def predict(model: Pipeline, input_data: dict[str, Any]) -> dict[str, Any]:
     X = pd.DataFrame([input_data])
 
     pred = model.predict(X)[0]

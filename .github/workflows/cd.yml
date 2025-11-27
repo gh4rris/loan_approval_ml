@@ -29,7 +29,7 @@ jobs:
             git clone https://github.com/gh4rris/loan_approval_ml.git
             cd loan_approval_ml/
             rm -r notebooks/ images/ .github/
-            rm README.md docker-compose.local.yml Dockerfile.mlflow eslint.config.mjs package-lock.json package.json
+            rm README.md docker-compose.local.yml Dockerfile.mlflow eslint.config.mjs package-lock.json package.json src/test_train.py src/test_predict.py
             touch .env
             echo APP_PORT=${{ vars.APP_PORT }} > .env
             echo MLFLOW_PORT=${{ vars.MLFLOW_PORT }} >> .env

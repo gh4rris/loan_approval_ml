@@ -4,3 +4,4 @@ mlruns/
 node_modules/
 run_ids/
 .env
+.pytest_cache

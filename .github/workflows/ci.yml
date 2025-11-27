@@ -5,6 +5,23 @@ on:
     branches: [main]
 
 jobs:
+  tests:
+    name: Unit-Tests-Python
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12.3"
+
+      - name: Run unit tests
+        run: |
+          python -m pytest src/test_*.py
+
   style-python:
     name: Style-Python
     runs-on: ubuntu-latest

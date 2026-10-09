@@ -6,6 +6,8 @@ The notebooks include an exploratory data analysis of the training data: [01_eda
 
 Live app: [http://ec2-35-179-103-165.eu-west-2.compute.amazonaws.com:8000](http://ec2-35-179-103-165.eu-west-2.compute.amazonaws.com:8000)
 
+YouTube Walkthrough: [https://youtu.be/3sIJPQx7Y5Q](https://youtu.be/3sIJPQx7Y5Q)
+
 ![loan-app](/images/loan-approval.jpg)
 
 ## Features
